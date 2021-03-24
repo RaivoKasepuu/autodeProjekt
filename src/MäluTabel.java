@@ -1,15 +1,20 @@
 import java.util.ArrayList;
 
-public class MäluTabel implements Tabel{
+//public class MäluTabel implements Tabel{
+
+
+    public class MäluTabel{
     ArrayList<Auto> autoTabel = new ArrayList<>();
 
     public void lisaAuto(Auto auto) {
+        System.out.println("Mälutabel - lisaAuto");
         autoTabel.add(auto);
     }
 
 
-    @Override
+   // @Override
     public boolean kustutaAuto(int reaNr) {
+        System.out.println("Mälutabel - kustutaAuto");
         if (reaNr > 0 && reaNr <= autoTabel.size()) {
             autoTabel.remove(reaNr-1);
             return true;
@@ -18,8 +23,9 @@ public class MäluTabel implements Tabel{
         }
     }
 
-    @Override
+  //  @Override
     public String prindiTabel() {
+        System.out.println("Mälutabel - prindiTabel");
         if (autoTabel.isEmpty()) {
             return "Tabel on tühi!";
         }
@@ -33,11 +39,11 @@ public class MäluTabel implements Tabel{
         StringBuilder sb = new StringBuilder();
         sb.append("|Nr |Kuupäev   |       VIN       | Mark  |" + mudeliPäis + "| Asukoht  |" + kliendiPäis + "|\n");
 
-        int i = 1;
+        // int i = 1;    // Asendasin AutoId - ga
 
         for (Auto auto: autoTabel) {
             sb.append("|");
-            sb.append(String.format("%1$-3s", i++));
+            sb.append(String.format("%1$-3s", auto.getId()));
             sb.append("|");
             sb.append(auto.getKuupäev());
             sb.append("|");

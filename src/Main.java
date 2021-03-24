@@ -4,30 +4,41 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    static Tabel tabel = new MäluTabel();
-    //static Tabel tabel = new FailiTabel("autod.txt");
+    //static MäluTabel tabel = new MäluTabel();
+    //static MäluTabelTööd tööTabel = new MäluTabelTööd();
+    static FailiTabel tabel = new FailiTabel("autod.txt");
+    static FailiTabelTööd tööTabel = new FailiTabelTööd("töö.txt");
 
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
+        System.out.println("Tere tulemast autode müügiks ettevalmistamise infosüsteemi!");
+        System.out.println();
+        //      System.out.println("Hetkel on süsteemis järgmised autod: ");
+        //    FailiTabel.prindiTabel();
+
         System.out.println("Auto lisamiseks vali: " + Menüü.LISA_AUTO.ordinal());
-        System.out.println("Tabeli printimiseks vali: " + Menüü.PRINDI_TABEL.ordinal());
+        System.out.println("Autode tabeli printimiseks vali: " + Menüü.PRINDI_TABEL.ordinal());
         System.out.println("Auto kustutamiseks vali: " + Menüü.KUSTUTA_AUTO.ordinal());
         System.out.println("Töö lisamiseks vali: " + Menüü.LISA_TÖÖ.ordinal());
+        System.out.println("Tööde tabeli printimiseks vali: " + Menüü.PRINDI_TÖÖ_TABEL.ordinal());
         System.out.println("Väljumiseks vali: " + Menüü.MENÜÜST_VÄLJA.ordinal());
 
 
         Scanner valik = new Scanner(System.in);
 
 
-        loop: while (true) {
+        loop:
+        while (true) {
             System.out.print("Tee valik: ");
 
             int input = valik.nextInt();
             switch (Menüü.values()[input]) {
 
                 case LISA_AUTO -> {
-                    lisaAutoMenüü();
+                    Actions.lisaAutoTest();
+                    //lisaAutoMenüüAutomaatne();  //kiiremaks testimiseks
+                    // lisaAutoMenüü();
                     break;
                 }
                 case PRINDI_TABEL -> {
@@ -42,19 +53,16 @@ public class Main {
                     lisaTööMenüü();
                     break;
                 }
-
-
-
+                case PRINDI_TÖÖ_TABEL -> {
+                    prindiTööTabelMenüü();
+                    break;
+                }
 
                 case MENÜÜST_VÄLJA -> {
                     break loop;
                 }
-
             }
         }
-
-
-
     }
 
     static void lisaAutoMenüü() {
@@ -86,27 +94,37 @@ public class Main {
 
         ArrayList<Töö> töödeNimekiri = new ArrayList<>();
 
-        Auto uusAuto = new Auto(loomiseKuupäev, vinTähis, mark, mudel, klient, asukoht, töödeNimekiri);
+        Integer id = IdGeneraator.getNextId();
 
+        Auto uusAuto = new Auto(id, loomiseKuupäev, vinTähis, mark, mudel, klient, asukoht, töödeNimekiri);
 
-        System.out.println("Uus töö edukalt sisestatud!");
+        System.out.println("Uus Auto edukalt sisestatud!");
+        System.out.println(uusAuto.toString());
 
     }
 
+
+    static void prindiTööTabelMenüü() {
+        System.out.println("Menüü prindiTööTabelMenüü");
+        tööTabel.prindiTööTabel();
+    }
+
+    static void lisaTööMenüüAutomaatne() {
+        for (int i = 0; i < 5; i++) {
+            Töö uusTöö = new Töö(i, "klaaside toonimine", false, "osta värvi");
+
+        }
+
+
+    }
 
     static void lisaTööMenüü() {
 
         Scanner sisend = new Scanner(System.in);
 
-        /*
-        System.out.println("Sisesta kuupäev formaadis YYYY-MM-DD: ");
-        String kuupäev = sisend.nextLine();
-        LocalDate loomiseKuupäev = LocalDate.now();
+        System.out.println("Sisesta auto id: ");
+        int id = Integer.parseInt(sisend.nextLine());
 
-        if (kuupäev.length() != 0) {
-            loomiseKuupäev = LocalDate.parse(kuupäev);
-        }
-*/
         System.out.println("Sisesta töö nimetus: ");
         String nimi = sisend.nextLine();
 
@@ -117,10 +135,10 @@ public class Main {
 
         ArrayList<Töö> töödeNimekiri = new ArrayList<>();
 
-        Töö uusTöö = new Töö(nimi, tehtud, lisainfo );
+        Töö uusTöö = new Töö(id, nimi, tehtud, lisainfo);
 
 
-        tabel.lisaTöö(uusTöö);
+        tööTabel.lisaTöö(uusTöö);
 
         System.out.println("Uus töö edukalt sisestatud!");
 
@@ -132,8 +150,7 @@ public class Main {
         int reaNr = sc.nextInt();
         if (tabel.kustutaAuto(reaNr)) {
             System.out.println("Auto realt nr " + reaNr + " kustutatud!");
-        }
-        else {
+        } else {
             System.out.println("Auto eemaldamine ebaõnnestus. Kontrolli rea numberit!");
         }
 
@@ -146,5 +163,5 @@ public class Main {
 }
 
 enum Menüü {
-    LISA_AUTO, PRINDI_TABEL, KUSTUTA_AUTO, LISA_TÖÖ, MENÜÜST_VÄLJA
+    LISA_AUTO, PRINDI_TABEL, KUSTUTA_AUTO, LISA_TÖÖ, PRINDI_TÖÖ_TABEL, MENÜÜST_VÄLJA
 }

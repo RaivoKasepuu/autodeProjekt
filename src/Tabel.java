@@ -1,7 +1,9 @@
 public interface Tabel {
-    default void lisaAuto(Auto auto) {
+ /*
 
-    }
+  default void lisaAuto(Auto auto) {
+
+  }
 
     default void lisaTöö(Töö töö) {
 
@@ -9,4 +11,7 @@ public interface Tabel {
 
     boolean kustutaAuto(int reaNr);
     String prindiTabel();
+
+
+   */
 }

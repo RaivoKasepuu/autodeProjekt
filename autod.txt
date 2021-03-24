@@ -1,1 +1,4 @@
-2020-02-02,SDfff,ffffsfdf,feffedfe,bgbgbg,gbgb,[]
+1,2021-03-24,VIN1234567,Audi,A4,Kalmer Tennossaar,Tapa,[]
+1,2021-03-24,VIN1234567,Audi,A4,Kalmer Tennossaar,Tapa,[]
+2,2021-03-24,VIN1234567,Audi,A4,Kalmer Tennossaar,Tapa,[]
+3,2021-03-24,VIN1234567,Audi,A4,Kalmer Tennossaar,Tapa,[]
